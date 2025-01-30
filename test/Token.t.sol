@@ -2,10 +2,10 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Test.sol";
-import { console } from "forge-std/console.sol";
+import {console} from "forge-std/console.sol";
 
-import { Token } from "../src/Token.sol";
-import { EasyAuctionMock } from "../test/EasyAuctionMock.sol";
+import {Token} from "../src/Token.sol";
+import {EasyAuctionMock} from "../test/EasyAuctionMock.sol";
 
 contract TokenTest is Test {
     Token internal token;
