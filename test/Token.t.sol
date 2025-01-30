@@ -2,10 +2,10 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Test.sol";
-import { console } from "forge-std/console.sol";
+import {console} from "forge-std/console.sol";
 
-import { Token } from "../src/Token.sol";
-import { EasyAuctionMock } from "../test/EasyAuctionMock.sol";
+import {Token} from "../src/Token.sol";
+import {EasyAuctionMock} from "./EasyAuctionMock.sol";
 
 contract TokenTest is Test {
     Token internal token;
@@ -27,7 +27,7 @@ contract TokenTest is Test {
         vm.stopPrank();
     }
 
-    function testTokenSupply() public {
+    function testTokenSupply() public view {
         assertEq(token.totalSupply(), 100_000_000 ether);
         assertEq(token.balanceOf(deployer), 99_999_900 ether);
         assertEq(token.balanceOf(alice), 100 ether);
