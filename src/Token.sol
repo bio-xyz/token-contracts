@@ -8,11 +8,11 @@ pragma solidity ^0.8.23;
 //       '.  `.:_ | :_.' '.  `.:_ | :_.' '.  `.:_ | :_.' '.  `.
 //          `-..,..-'       `-..,..-'       `-..,..-'       `
 
-import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import { ERC20Burnable } from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import { ERC20Capped } from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
-import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
-import { AccessControlEnumerable } from "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import {ERC20Capped} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {AccessControlEnumerable} from "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 
 /// @author ElliottAnastassios (BIO Protocol) - elliott@bio.xyz
 /// @author Schmackofant - schmackofant@protonmail.com
@@ -43,7 +43,9 @@ contract Token is ERC20, ERC20Burnable, Ownable, AccessControlEnumerable {
         // Do the following check if transfers are not enabled yet
         if (!transfersEnabled) {
             // from address has to be either the zero address (mint event), the owner or someone with TRANSFER_ROLE
-            require(from == address(0) || from == owner() || hasRole(TRANSFER_ROLE, from), "ERC20: transfers not enabled");
+            require(
+                from == address(0) || from == owner() || hasRole(TRANSFER_ROLE, from), "ERC20: transfers not enabled"
+            );
         }
     }
 }
