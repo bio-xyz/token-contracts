@@ -1,40 +1,29 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-// -._    _.--'"`'--._    _.--'"`'--._    _.--'"`'--._
-//     '-:`.'|`|"':-.  '-:`.'|`|"':-.  '-:`.'|`|"':-.  '.
-//   '.  '.  | |  | |'.  '.  | |  | |'.  '.  | |  | |'.  '.
-//     '.  '.| |  | |  '.  '.| |  | |  '.  '.| |  | |  '.  '.
-//       '.  `.:_ | :_.' '.  `.:_ | :_.' '.  `.:_ | :_.' '.  `.
-//          `-..,..-'       `-..,..-'       `-..,..-'       `
-
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import {ERC20Capped} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {AccessControlEnumerable} from "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
+import {AccessControlDefaultAdminRules} from "@openzeppelin/contracts/access/AccessControlDefaultAdminRules.sol";
 
-/// @author ElliottAnastassios (BIO Protocol) - elliott@bio.xyz
-/// @author Schmackofant - schmackofant@protonmail.com
-
-contract Token is ERC20, ERC20Burnable, Ownable, AccessControlEnumerable {
+contract Token is ERC20, ERC20Burnable, AccessControlDefaultAdminRules {
     bytes32 public constant TRANSFER_ROLE = keccak256("TRANSFER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     bool public transfersEnabled = false;
 
-    constructor(string memory name, string memory symbol) ERC20(name, symbol) {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    }
+    constructor(string memory name, string memory symbol)
+        ERC20(name, symbol)
+        AccessControlDefaultAdminRules(0, msg.sender)
+    {}
 
-    // Mint new tokens
-    // (can only be called by MINTER_ROLE bearers)
     function mint(address to, uint256 amount) external onlyRole(MINTER_ROLE) {
         _mint(to, amount);
     }
 
     // In this implementation this is one-way: once transfers are enabled, they cannot be disabled again
-    function enableTransfers() external onlyOwner {
+    function enableTransfers() external onlyRole(DEFAULT_ADMIN_ROLE) {
         transfersEnabled = true;
     }
 
