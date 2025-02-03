@@ -1,7 +1,5 @@
 ## Smart Contracts
 
-### Token Contract
-
 The project includes an ERC20 token contract with the following features:
 
 #### Features
